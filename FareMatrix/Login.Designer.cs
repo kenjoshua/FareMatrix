@@ -28,18 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.tableAdapterManager1 = new FareMatrix.FareMatrixDataDataSetTableAdapters.TableAdapterManager();
+            this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.fareMatrixDataDataSet = new FareMatrix.FareMatrixDataDataSet();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.Btn_Login = new Guna.UI2.WinForms.Guna2Button();
             this.btn_Signup = new Guna.UI2.WinForms.Guna2Button();
+            this.userTableAdapter = new FareMatrix.FareMatrixDataDataSetTableAdapters.UserTableAdapter();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fareMatrixDataDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -80,30 +86,15 @@
             this.label3.Text = "Password:";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // textBox1
+            // userBindingSource
             // 
-            this.textBox1.Location = new System.Drawing.Point(241, 53);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(179, 20);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            this.userBindingSource.DataMember = "User";
+            this.userBindingSource.DataSource = this.fareMatrixDataDataSet;
             // 
-            // textBox2
+            // fareMatrixDataDataSet
             // 
-            this.textBox2.Location = new System.Drawing.Point(241, 89);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(179, 20);
-            this.textBox2.TabIndex = 1;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
-            // 
-            // tableAdapterManager1
-            // 
-            this.tableAdapterManager1.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager1.Connection = null;
-            this.tableAdapterManager1.UpdateOrder = FareMatrix.FareMatrixDataDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager1.UserTableAdapter = null;
+            this.fareMatrixDataDataSet.DataSetName = "FareMatrixDataDataSet";
+            this.fareMatrixDataDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // pictureBox1
             // 
@@ -145,6 +136,7 @@
             // Btn_Login
             // 
             this.Btn_Login.CheckedState.Parent = this.Btn_Login;
+            this.Btn_Login.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Btn_Login.CustomImages.Parent = this.Btn_Login;
             this.Btn_Login.FillColor = System.Drawing.Color.Gray;
             this.Btn_Login.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -161,6 +153,7 @@
             // btn_Signup
             // 
             this.btn_Signup.CheckedState.Parent = this.btn_Signup;
+            this.btn_Signup.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_Signup.CustomImages.Parent = this.btn_Signup;
             this.btn_Signup.FillColor = System.Drawing.Color.Gray;
             this.btn_Signup.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -174,6 +167,41 @@
             this.btn_Signup.Text = "SIGNUP";
             this.btn_Signup.Click += new System.EventHandler(this.btn_Signup_Click);
             // 
+            // userTableAdapter
+            // 
+            this.userTableAdapter.ClearBeforeFill = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(241, 53);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(179, 20);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(241, 89);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(179, 20);
+            this.textBox2.TabIndex = 1;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.No;
+            this.button1.Location = new System.Drawing.Point(285, 153);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(118, 23);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Forgot Password";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -181,6 +209,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(487, 191);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_Signup);
             this.Controls.Add(this.Btn_Login);
             this.Controls.Add(this.checkBox1);
@@ -193,8 +222,11 @@
             this.Controls.Add(this.pictureBox2);
             this.DoubleBuffered = true;
             this.Name = "Login";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FareMatrix";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fareMatrixDataDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
@@ -207,14 +239,17 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private FareMatrixDataDataSetTableAdapters.TableAdapterManager tableAdapterManager1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.CheckBox checkBox1;
         private Guna.UI2.WinForms.Guna2Button Btn_Login;
         private Guna.UI2.WinForms.Guna2Button btn_Signup;
+        private FareMatrixDataDataSet fareMatrixDataDataSet;
+        private System.Windows.Forms.BindingSource userBindingSource;
+        private FareMatrixDataDataSetTableAdapters.UserTableAdapter userTableAdapter;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -8,24 +8,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace FareMatrix
 {
     public partial class Login : Form
     {
 
-        public OleDbConnection connection = new OleDbConnection();
-
 
         public Login()
         {
             InitializeComponent();
 
-            connection.ConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\pc\source\repos\FareMatrix\FareMatrix\FareMatrixData.mdb; User Id=admin;Password=;";
-
-
+            
 
         }
+
+
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -35,6 +36,18 @@ namespace FareMatrix
 
         }
 
+
+        private void btn_Signup_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Signup signup = new Signup();
+            signup.ShowDialog();
+            this.Close();
+
+        }
+
+
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
@@ -42,7 +55,9 @@ namespace FareMatrix
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            textBox2.UseSystemPasswordChar = true;
+            // TODO: This line of code loads data into the 'fareMatrixDataDataSet.User' table. You can move, or remove it, as needed.
+            this.userTableAdapter.Fill(this.fareMatrixDataDataSet.User);
+
 
 
         }
@@ -61,7 +76,7 @@ namespace FareMatrix
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-
+            textBox2.UseSystemPasswordChar = true;
 
         }
 
@@ -100,42 +115,56 @@ namespace FareMatrix
 
         private void label2_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void Btn_Login_Click(object sender, EventArgs e)
         {
-            connection.Open();
-            OleDbCommand command = new OleDbCommand();
-            command.Connection = connection;
-            command.CommandText = "select = from FareMatrixData.mdb where Username= '" + textBox1.Text + "' and Password= '" + textBox2.Text + "'";
-            OleDbDataReader reader = command.ExecuteReader();
 
-            int count = 0;
-            while (reader.Read())
+            if (string.IsNullOrEmpty(textBox1.Text))
             {
-                count = count + 1;
+                MessageBox.Show("Please Enter Your Username", "Message", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                textBox1.Focus();
+                return;
+            }
+            try
+            {
+                FareMatrixDataDataSetTableAdapters.UserTableAdapter user = new FareMatrixDataDataSetTableAdapters.UserTableAdapter();
+                FareMatrixDataDataSet.UserDataTable dt = user.GetDataByUsernamePassword(textBox1.Text, textBox2.Text);
+
+                if (dt.Rows.Count > 0)
+                {
+
+                    MessageBox.Show("You have logged in", "Message", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                    this.Hide();
+                    Dashboard dashboard = new Dashboard();
+                    dashboard.ShowDialog();
+                    this.Close();
+
+                }
+                else
+                {
+                    MessageBox.Show("Username and password is incorrect", "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+
 
             }
-            if (count == 1)
+            catch (Exception ex)
             {
-                MessageBox.Show("correct");
-            }
-            if (count > 1)
-            {
-                MessageBox.Show("incorrect");
+                MessageBox.Show(ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            connection.Close();
+
         }
 
-        private void btn_Signup_Click(object sender, EventArgs e)
+        private void button1_Click_1(object sender, EventArgs e)
         {
             this.Hide();
-            Signup signup = new Signup();
-            signup.ShowDialog();
+            ForgetPassword forget = new ForgetPassword();
+            forget.ShowDialog();
             this.Close();
-            
         }
     }
 }
